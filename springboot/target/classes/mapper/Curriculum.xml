@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CurriculumMapper">
+
+    <resultMap id="curriculumMap" type="com.example.demo.entity.Curriculum">
+        <result property="id" column="id"/>
+        <result property="curname" column="curname"/>
+        <result property="curmajor" column="curmajor"/>
+        <result property="cmajor" column="cmajor"/>
+        <result property="curyear" column="curyear"/>
+        <result property="curteacher" column="curteacher"/>
+        <result property="curtime" column="curtime"/>
+        <collection property="gradeList" javaType="ArrayList" ofType="com.example.demo.entity.Grade">
+            <result column="id" property="id" />
+            <result column="gsname" property="gsname" />
+            <result column="gtname" property="gtname" />
+            <result column="gcurname" property="gcurname" />
+            <result column="gmajor" property="gmajor" />
+            <result column="score" property="score" />
+            <result column="gp" property="gp" />
+        </collection>
+    </resultMap>
+
+    <select id="findPage" resultMap="curriculumMap">
+        SELECT `curriculum`.* ,gsname,gtname,score,gp,gcurname,gmajor from `curriculum`
+        left join grade on grade.gcurname = curriculum.curname and grade.gmajor = curriculum.curmajor and grade.gtname = curriculum.curteacher
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ClassesMapper">
+
+    <resultMap id="classesMap" type="com.example.demo.entity.Classes">
+        <result property="id" column="id"/>
+        <result property="cname" column="cname"/>
+        <result property="cdepartment" column="cdepartment"/>
+        <result property="cmajor" column="cmajor"/>
+        <collection property="studentList" javaType="ArrayList" ofType="com.example.demo.entity.Student">
+            <result column="id" property="id" />
+            <result column="name" property="name" />
+            <result column="num" property="num" />
+        </collection>
+    </resultMap>
+
+    <select id="findPage" resultMap="classesMap">
+        SELECT `classes`.* ,name,num from `classes`
+        left join student on student.sclass = classes.cname and student.smajor = classes.cmajor
+    </select>
+</mapper>
